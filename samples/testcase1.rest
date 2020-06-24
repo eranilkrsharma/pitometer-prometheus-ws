@@ -1,0 +1,42 @@
+
+POST http://localhost:8080/api/pitometer
+Content-Type: application/json
+
+{  "timeStart": 1551398400,
+    "timeEnd": 1555027200,
+    "perfSpec": {
+  "spec_version": "1.1",
+  "indicators": [
+    {
+      "id": "memory-usage",
+      "source": "Prometheus",
+      "query": "sum by (namespace) (container_memory_usage_bytes{namespace ='xxx'})",
+      "output": "total",
+      "grading": {
+        "type": "Threshold",
+        "thresholds": {
+          "upperSevere": 1668295897088
+        },
+        "metricScore": 10
+      }
+    },
+    {
+      "id": "file-system",
+      "source": "Prometheus",
+      "query": "sum by (namespace)(container_fs_usage_bytes{namespace='xxx'})",
+      "output": "total",
+      "grading": {
+        "type": "Threshold",
+        "thresholds": {
+          "upperSevere": 26587599872
+        },
+        "metricScore": 90
+      }
+    }
+  ],
+  "objectives": {
+    "pass": 90,
+    "warning": 75
+  }
+    }
+}
